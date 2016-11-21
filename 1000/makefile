@@ -1,10 +1,10 @@
 objs = a+b.o
 
-edit : $(objs)
-	g++ -o edit $(objs)
+result : $(objs)
+	g++ -o result $(objs)
 
 a+b.o : a+b.cpp
 	g++ -c a+b.cpp
 
-.PHONY : clean:
-	-rm $(objs)
+clean:
+	-rm $(objs) result.exe
