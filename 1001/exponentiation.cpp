@@ -5,7 +5,7 @@ using namespace std;
 
 int* add(string s1, string s2);
 int* sub(string s1, string s2);
-int* mul(int a[], int b[]);
+int* mul(string s1, string s2);
 void output(int *c);
 
 int main()
@@ -13,11 +13,14 @@ int main()
 	string s1, s2;
 	int *c;
 
-	cin>>s1>>s2;
+	while(cin>>s1>>s2){
 
-//	c = add(s1, s2);
-	c = sub(s1, s2);
+	c = add(s1, s2);
+//	c = sub(s1, s2);
+//    c = mul(s1, s2);
 
+    cout<<"----------------"<<endl;
+	}
 	return 0;
 }
 
@@ -59,8 +62,11 @@ int* add(string s1, string s2)
 		c[0] = c[0] + 1;
 	}
 	// output
-	for (int j = c[0]; j>=1; --j){
-        cout<<c[j];
+	int flag = 0;
+	for (int m = c[0]; m>=1; --m){
+        if(c[m] != 0 || flag == 1){
+            cout<<c[m];
+        }
 	}
 	cout<<endl;
 
@@ -133,7 +139,41 @@ int* sub(string s1, string s2)
     return c;
 }
 
-int* mul(int a[], int b[])
+int* mul(string s1, string s2)
 {
+    int a[100] = {0}, b[100] = {0};
+    a[0] = s1.size();
+    for(int i = 1; i <= a[0]; ++i){
+        a[i] = s1[a[0]-i] - '0';
+    }
+    b[0] = s2.size();
+    for(int i = 1; i <= b[0]; ++i){
+        b[i] = s2[b[0]-i] - '0';
+    }
+
+    int c[200] = {0};
+    int x = 0;
+    int i = 1, j = 1;
+    for(i = 1; i <= a[0]; ++i){
+        for(j = 1; j <= b[0]; ++j){
+            c[i+j-1] = c[i+j-1 ] + a[i] * b[j] + x;
+            x = c[i+j-1] / 10;
+            c[i+j-1] %= 10;
+        }
+    }
+    if(x==1){
+        c[a[0]+b[0]] = x;
+        c[0] = a[0] + b[0];
+    }else{
+        c[0] = a[0] + b[0] - 1;
+    }
+    int flag = 0;
+    for(int m = c[0]; m >= 1; --m){
+        if(c[m] != 0 || flag == 1){
+            cout<<c[m];
+        }
+    }
+    cout<<endl;
+
     return 0;
 }
